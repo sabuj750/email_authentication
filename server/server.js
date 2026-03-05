@@ -1,34 +1,35 @@
-import express from 'express';
-import cors from 'cors';
-import 'dotenv/config';
-import cookieParser from 'cookie-parser';
-import connectDb from './config/MongoDb.js';
-import authRouter from './routes/authRoutes.js';
-import userDataRouter from './routes/userDataRoutes.js';
+import express from "express";
+import cors from "cors";
+import "dotenv/config";
+import cookieParser from "cookie-parser";
+import connectDb from "./config/MongoDb.js";
+import authRouter from "./routes/authRoutes.js";
+import userDataRouter from "./routes/userDataRoutes.js";
 
 const app = express();
 const port = process.env.PORT || 4000;
 
+app.use(express.json());
+app.use(cookieParser());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://email-authentication-j9p0.onrender.com",
+      "https://email-authentication-frontend-fimw.onrender.com",
+      process.env.CLIENT_URL,
+    ].filter(Boolean),
+    credentials: true,
+  }),
+);
 
+app.use("/api/auth", authRouter);
+app.use("/api/user", userDataRouter);
+app.get("/", (req, res) => {
+  res.send("Hello World");
+});
 
-app.use(express.json())
-app.use(cookieParser())
-app.use(cors({
-  origin: [
-    'http://localhost:5173',
-    'https://email-authentication-j9p0.onrender.com',
-    process.env.CLIENT_URL
-  ].filter(Boolean),
-  credentials: true,
-}))
-
-app.use('/api/auth' , authRouter);
-app.use('/api/user', userDataRouter);
-app.get('/' , (req  , res) => {
-  res.send('Hello World')
-})
-
-app.listen(port , () => {
-  console.log(`Server is running on port ${port}`)
-  connectDb()
-})
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+  connectDb();
+});

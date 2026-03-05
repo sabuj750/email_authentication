@@ -14,7 +14,11 @@ const port = process.env.PORT || 4000;
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:5173',
+  origin: [
+    'http://localhost:5173',
+    'https://email-authentication-j9p0.onrender.com',
+    process.env.CLIENT_URL
+  ].filter(Boolean),
   credentials: true,
 }))
 

@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 export const AppContent = createContext();
 
 export const AppContextProvider = ({ children }) => {
-  const backend_url ='https://email-authentication-backend-ixvx.onrender.com';
+  const backend_url = import.meta.env.VITE_BACKEND_URL;
   const [isLoggedin, setIsLoggedin] = useState(false);
   const [userData, setUserData] = useState(false);
   const getAuthState = async () => {

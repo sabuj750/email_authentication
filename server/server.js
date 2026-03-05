@@ -14,7 +14,7 @@ const port = process.env.PORT || 4000;
 app.use(express.json())
 app.use(cookieParser())
 app.use(cors({
-  origin: "https://email-authentication-frontend-fimw.onrender.com",
+  origin:'https://email-authentication-frontend-fimw.onrender.com',
   credentials: true,
 }))
 
